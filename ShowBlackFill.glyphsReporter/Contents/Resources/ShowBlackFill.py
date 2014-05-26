@@ -44,7 +44,7 @@ class ShowBlackFill ( NSObject, GlyphsReporterProtocol ):
 	
 	def modifierMask( self ):
 		try:
-			return None
+			return 0
 		except Exception as e:
 			self.logToConsole( "modifierMask: %s" % str(e) )
 	
