@@ -211,10 +211,20 @@ class ShowBlackFill ( NSObject, GlyphsReporterProtocol ):
 		"""
 		Fills closed outline, outlines handles, and paints nodes.
 		"""
-		#Black fill
+		# Components filled
 		try:
-						NSColor.colorWithCalibratedRed_green_blue_alpha_( 0.0, 0.0, 0.0, 0.85 ).set() # sets RGBA values between 0.0 and 1.0
-						Layer.bezierPath().fill()
+			NSColor.colorWithCalibratedRed_green_blue_alpha_( 0.0, 0.0, 0.0, 0.7 ).set()
+			myComponents = Layer.components
+			numberOfMyComponents = len( myComponents )
+			for i in range( numberOfMyComponents ):
+				myComponentArea = myComponents[i].bezierPath()
+				myComponentArea.fill()
+		except Exception as e:
+			self.logToConsole( "drawForegroundForLayer_: %s" % str(e) )
+		# Outlines filled
+		try:
+			NSColor.colorWithCalibratedRed_green_blue_alpha_( 0.0, 0.0, 0.0, 0.85 ).set()
+			Layer.bezierPath().fill()
 		except Exception as e:
 			self.logToConsole( "drawForegroundForLayer_: %s" % str(e) )
 
@@ -224,7 +234,7 @@ class ShowBlackFill ( NSObject, GlyphsReporterProtocol ):
 			circleRadius = NodeSize / Scale
 			handleStroke = 1.0 / Scale
 			
-			# Selected handles
+			# Selected handles lined
 			NSColor.colorWithCalibratedRed_green_blue_alpha_( 0.5, 0.5, 0.5, 0.5).set()
 			circlesToBeDrawn = NSBezierPath.alloc().init()
 			linesToBeDrawn   = NSBezierPath.alloc().init()
@@ -239,28 +249,28 @@ class ShowBlackFill ( NSObject, GlyphsReporterProtocol ):
 			circlesToBeDrawn.setLineWidth_( handleStroke )
 			circlesToBeDrawn.stroke()
 
-			# Unselected nodes
+			# Unselected nodes filled
 			NSColor.colorWithCalibratedRed_green_blue_alpha_( 1.0, 1.0, 1.0, 0.15 ).set()
 			circlesToBeDrawn = NSBezierPath.alloc().init()
 			for thisPoint in self.getListOfNodesToBeMarked( Layer ):
 				circlesToBeDrawn.appendBezierPath_( self.markerForPoint( thisPoint, circleRadius ) )
 			circlesToBeDrawn.fill()
 			
-			# Selected Smooth On-curve
+			# Selected Smooth On-curve filled
 			NSColor.colorWithCalibratedRed_green_blue_alpha_( 0.0, 0.7, 0.4, 0.3 ).set()
 			circlesToBeDrawn = NSBezierPath.alloc().init()
 			for thisPoint in self.getListOfSelectedSmooth( Layer ):
 				circlesToBeDrawn.appendBezierPath_( self.markerForPoint( thisPoint, circleRadius ) )
 			circlesToBeDrawn.fill()
 
-			# Selected Sharp On-Curve
+			# Selected Sharp On-Curve filled
 			NSColor.colorWithCalibratedRed_green_blue_alpha_( 0.2, 0.4, 0.8, 0.3 ).set()
 			circlesToBeDrawn = NSBezierPath.alloc().init()
 			for thisPoint in self.getListOfSelectedSharp( Layer ):
 				circlesToBeDrawn.appendBezierPath_( self.markerForPoint( thisPoint, circleRadius ) )
 			circlesToBeDrawn.fill()
 
-			# Selected Off-curve
+			# Selected Off-curve filled
 			NSColor.colorWithCalibratedRed_green_blue_alpha_( 0.5, 0.5, 0.5, 0.2 ).set()
 			circlesToBeDrawn = NSBezierPath.alloc().init()
 			for thisPoint in self.getListOfSelectedOffCurve( Layer ):
