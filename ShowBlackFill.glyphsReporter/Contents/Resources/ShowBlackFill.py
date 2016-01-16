@@ -48,6 +48,13 @@ class ShowBlackFill ( NSObject, GlyphsReporterProtocol ):
 		except Exception as e:
 			self.logToConsole( "modifierMask: %s" % str(e) )
 	
+	def bezierPathComp( self, thisPath ):
+		"""Compatibility method for bezierPath before v2.3."""
+		try:
+			return thisPath.bezierPath() # until v2.2
+		except Exception as e:
+			return thisPath.bezierPath # v2.3+
+
 	def setController_( self, Controller ):
 		self.controller = Controller
 	
@@ -224,7 +231,7 @@ class ShowBlackFill ( NSObject, GlyphsReporterProtocol ):
 		# Outlines filled
 		try:
 			NSColor.colorWithCalibratedRed_green_blue_alpha_( 0.0, 0.0, 0.0, 0.85 ).set()
-			Layer.bezierPath().fill()
+			self.bezierPathComp(Layer).fill()
 		except Exception as e:
 			self.logToConsole( "drawForegroundForLayer_: %s" % str(e) )
 
