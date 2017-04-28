@@ -4,16 +4,20 @@ This is a plugin for the [Glyphs font editor](http://glyphsapp.com/) by Georg Se
 It fills closed paths with almost black even while you are still drawing (yes, not perfectly black).
 After installation, it will add the menu item *View > Show Black Fill*.
 You can set a keyboard shortcut in System Preferences. I personally set it to Option+Command+B (I could make it as default, but don’t want to force it).
-There is a similar plugin called [Show Filled Preview](https://github.com/mekkablue/ShowFilledPreview), and my version focuses more on neat fill without outlines, admittedly causing other info (guidelines and anchors) to be much less visible.
-Huge thanks to [mekkablue](https://github.com/mekkablue) for debugging.
+It is based on [Show Filled Preview](https://github.com/mekkablue/ShowFilledPreview) (thanks!), made for those who prefer a darker and sharper version.
+Huge thanks to [mekkablue](https://github.com/mekkablue) for debugging!
 
 ![Paths are filled in almost black while editing.](ShowBlackFill.png "Show Black Fill Screenshot")
 
 ### Installation
 
+You can use Glyphs' Plugin Manager and let it handle everything. If you want it the hard way...
+
 1. Download the complete ZIP file and unpack it, or clone the repository.
 2. Double click the .glyphsReporter file. Confirm the dialog that appears in Glyphs.
 3. Restart Glyphs
+
+The plugin will appear in Window > Waterfall.
 
 ### Usage Instructions
 
