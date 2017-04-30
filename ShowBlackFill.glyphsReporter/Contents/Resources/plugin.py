@@ -158,13 +158,3 @@ class ShowBlackFill(ReporterPlugin):
 		except Exception, e:
 			Glyphs.showMacroWindow()
 			print "Show Black Fill error (foreground): %s" % e
-
-	def inactiveLayers(self, layer):
-		try:
-#			self.ShowSiblings2ReporterLIB.drawSiblings(layer, self.getScale() )
-			path = layer.copyDecomposedLayer().bezierPath
-			NSColor.blackColor().set()
-			if path:
-				path.fill()
-		except:
-			print "[%s]:\n%s" % (self.nameOfFunction(), traceback.format_exc())
