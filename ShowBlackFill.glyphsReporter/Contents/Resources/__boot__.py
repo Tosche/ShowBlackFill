@@ -44,4 +44,4 @@ def _run(*scripts):
 		__file__ = path
 		execfile(path, globals(), globals())
 
-_run('ShowBlackFill.py')
+_run('plugin.py')

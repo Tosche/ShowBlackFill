@@ -7,27 +7,33 @@
 	<key>CFBundleDisplayName</key>
 	<string>ShowBlackFill</string>
 	<key>CFBundleExecutable</key>
-	<string>ShowBlackFill</string>
+	<string>plugin</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.tosche.ShowBlackFill</string>
+	<string>com.Tosche.ShowBlackFill</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>ShowBlackFill</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
-	<key>CFBundleShortVersionString</key>
-	<string>1.0.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>2</string>
+	<string>2.0</string>
+	<key>CFBundleShortVersionString</key>
+	<string>2.0</string>
+	<key>UpdateFeedURL</key>
+	<string>https://raw.githubusercontent.com/Tosche/ShowBlackFill/master/ShowBlackFill.glyphsReporter/Contents/Info.plist</string>
+	<key>productPageURL</key>
+	<string>https://github.com/Tosche/ShowBlackFill</string>
+	<key>productReleaseNotes</key>
+	<string>Made it compatible with Glyphs 2.3</string>
 	<key>LSHasLocalizedDisplayName</key>
 	<false/>
 	<key>NSAppleScriptEnabled</key>
 	<false/>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright, Toshi Omagari, 2014</string>
+	<string>Copyright, Tosche, 2016</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
