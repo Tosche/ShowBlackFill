@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 from GlyphsApp.plugins import *
+from GlyphsApp import *
 
 class ShowBlackFill(ReporterPlugin):
 
