@@ -1,13 +1,33 @@
 # encoding: utf-8
+from __future__ import division, print_function, unicode_literals
 
+###########################################################################################################
+#
+#
+#	Reporter Plugin
+#
+#	Read the docs:
+#	https://github.com/schriftgestalt/GlyphsSDK/tree/master/Python%20Templates/Reporter
+#
+#
+###########################################################################################################
+
+import objc
+from GlyphsApp import *
 from GlyphsApp.plugins import *
 
 class ShowBlackFill(ReporterPlugin):
 
+	@objc.python_method
 	def settings(self):
-		self.menuName = Glyphs.localize({'en': u'Black Fill'})
-#		self.generalContextMenus = [ {'name': Glyphs.localize({'en': u'Disable Nodes and Handles'}), 'action': self.disableNodesHandles} ]
+		self.menuName = Glyphs.localize({
+			'en': u'Black Fill',
+			'de': u'Schwarze Füllung',
+			'fr': u'remplissage noir',
+			'es': u'relleno negro',
+		})
 
+	@objc.python_method
 	def getNodesInfo( self, thisLayer ):  #Returns a list of all On-curve nodes.
 		try:
 			unselectedNodes = []
@@ -30,11 +50,11 @@ class ShowBlackFill(ReporterPlugin):
 							selectedOffCurves.append(n)
 			masterList = [unselectedNodes, selectedSmooths, selectedSharps, selectedOffCurves]
 			return masterList
-		except Exception, e:
+		except Exception as e:
 			return [[],[],[],[]]
-			Glyphs.showMacroWindow()
-			print "Show Black Fill error (getNodesInfo): %s" % e
+			print("Show Black Fill error (getNodesInfo): %s" % e)
 
+	@objc.python_method
 	def getHandlesInfo( self, thisLayer ): # Returns a list of Handles that need to be outlined.
 		try:
 			returnList = []
@@ -69,47 +89,48 @@ class ShowBlackFill(ReporterPlugin):
 								if nextNextNode not in currentSelection and nextNextNextNode not in currentSelection:
 									returnList.append( (nextNextNextNode, nextNextNode) )
 			return list(set(returnList))
-		except Exception, e:
-			Glyphs.showMacroWindow()
-			print "Show Black Fill error (getHandlesInfo): %s" % e
+		except Exception as e:
+			print("Show Black Fill error (getHandlesInfo): %s" % e)
 
+	@objc.python_method
 	def roundDotForPoint( self, thisPoint, markerWidth ): # Returns a circle with thisRadius around thisPoint.
 		try:
 			myRect = NSRect( ( thisPoint.x - markerWidth * 0.5, thisPoint.y - markerWidth * 0.5 ), ( markerWidth, markerWidth ) )
 			return NSBezierPath.bezierPathWithOvalInRect_(myRect)
-		except Exception, e:
-			Glyphs.showMacroWindow()
-			print "Show Black Fill error (roundDotForPoint): %s" % e
+		except Exception as e:
+			print("Show Black Fill error (roundDotForPoint): %s" % e)
 
+	@objc.python_method
 	def squareDotForPoint( self, thisPoint, markerWidth ): # Returns a square with thisRadius around thisPoint.
 		try:
 			myRect = NSRect( ( thisPoint.x - markerWidth * 0.5, thisPoint.y - markerWidth * 0.5 ), ( markerWidth, markerWidth ) )
 			return NSBezierPath.bezierPathWithRect_(myRect)
-		except Exception, e:
-			Glyphs.showMacroWindow()
-			print "Show Black Fill error (squareDotForPoint): %s" % e
+		except Exception as e:
+			print("Show Black Fill error (squareDotForPoint): %s" % e)
 
+	@objc.python_method
 	def foreground(self, layer):
 		try:
 			nodesLists = self.getNodesInfo( layer )
 		except:
 			pass
+			
 		try: # outlines
-			NSColor.colorWithCalibratedRed_green_blue_alpha_( 0.0, 0.0, 0.0, 0.85 ).set()
+			NSColor.textColor().colorWithAlphaComponent_(0.85).set()
 			if layer.bezierPath:
 				layer.bezierPath.fill()
-		except Exception, e:
-			Glyphs.showMacroWindow()
-			print "Show Black Fill error (foreground): %s" % e
+		except Exception as e:
+			print("Show Black Fill error (foreground): %s" % e)
+			
 		try: # components
-			NSColor.colorWithCalibratedRed_green_blue_alpha_( 0.0, 0.0, 0.0, 0.7 ).set()	
+			NSColor.greyColor().colorWithAlphaComponent_(0.7).set()	
 			if layer.components:
 				for c in layer.components:
 					c.bezierPath.fill()
 					#self.bezierPathComp(layer).fill()
-		except Exception, e:
-			Glyphs.showMacroWindow()
-			print "Show Black Fill error (foreground): %s" % e
+		except Exception as e:
+			print("Show Black Fill error (foreground): %s" % e)
+			
 		try: # nodes
 			HandleSize = self.getHandleSize()
 			scale = self.getScale()
@@ -118,8 +139,8 @@ class ShowBlackFill(ReporterPlugin):
 
 			# Selected handles lined
 			NSColor.colorWithCalibratedRed_green_blue_alpha_( 0.5, 0.5, 0.5, 0.5).set()
-			circlesToBeDrawn = NSBezierPath.alloc().init()
-			linesToBeDrawn   = NSBezierPath.alloc().init()
+			circlesToBeDrawn = NSBezierPath.bezierPath()
+			linesToBeDrawn   = NSBezierPath.bezierPath()
 			for thisPointPair in self.getHandlesInfo( layer ):
 				fromPoint = thisPointPair[0]
 				toPoint   = thisPointPair[1]
@@ -131,7 +152,7 @@ class ShowBlackFill(ReporterPlugin):
 			circlesToBeDrawn.setLineWidth_( handleStroke )
 			circlesToBeDrawn.stroke()
 
-			smooths = NSBezierPath.alloc().init()
+			smooths = NSBezierPath.bezierPath()
 			smoothToBeFilled = nodesLists[1]
 			for thisPoint in smoothToBeFilled:
 				smooths.appendBezierPath_( self.roundDotForPoint( thisPoint, zoomedHandleSize ) )
@@ -140,7 +161,7 @@ class ShowBlackFill(ReporterPlugin):
 			color.set()
 			smooths.fill()
 
-			sharps = NSBezierPath.alloc().init()
+			sharps = NSBezierPath.bezierPath()
 			sharpToBeFilled = nodesLists[2]
 			for thisPoint in sharpToBeFilled:
 				sharps.appendBezierPath_( self.squareDotForPoint( thisPoint, zoomedHandleSize ) )
@@ -149,12 +170,17 @@ class ShowBlackFill(ReporterPlugin):
 			color.set()
 			sharps.fill()
 
-			offCurves = NSBezierPath.alloc().init()
+			offCurves = NSBezierPath.bezierPath()
 			sharpToBeFilled = nodesLists[3]
 			for thisPoint in sharpToBeFilled:
 				offCurves.appendBezierPath_( self.roundDotForPoint( thisPoint, zoomedHandleSize ) )
 			NSColor.grayColor().set()
 			offCurves.fill()
-		except Exception, e:
-			Glyphs.showMacroWindow()
-			print "Show Black Fill error (foreground): %s" % e
+		except Exception as e:
+			print("Show Black Fill error (foreground): %s" % e)
+
+	@objc.python_method
+	def __file__(self):
+		"""Please leave this method unchanged"""
+		return __file__
+
