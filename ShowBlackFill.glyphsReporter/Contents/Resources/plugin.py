@@ -155,7 +155,7 @@ class ShowBlackFill(ReporterPlugin):
 			smooths = NSBezierPath.bezierPath()
 			smoothToBeFilled = nodesLists[1]
 			for thisPoint in smoothToBeFilled:
-				smooths.appendBezierPath_( self.roundDotForPoint( thisPoint, zoomedHandleSize ) )
+				smooths.appendBezierPath_( self.roundDotForPoint( thisPoint, zoomedHandleSize*1.45 ) )
 			colorData = Glyphs.defaults["GSColorNodeSmooth"]
 			color = NSUnarchiver.unarchiveObjectWithData_(colorData)
 			color.set()
@@ -164,7 +164,7 @@ class ShowBlackFill(ReporterPlugin):
 			sharps = NSBezierPath.bezierPath()
 			sharpToBeFilled = nodesLists[2]
 			for thisPoint in sharpToBeFilled:
-				sharps.appendBezierPath_( self.squareDotForPoint( thisPoint, zoomedHandleSize ) )
+				sharps.appendBezierPath_( self.squareDotForPoint( thisPoint, zoomedHandleSize*1.45 ) )
 			colorData = Glyphs.defaults["GSColorNodeCorner"]
 			color = NSUnarchiver.unarchiveObjectWithData_(colorData)
 			color.set()
