@@ -102,7 +102,7 @@ class ShowBlackFill(ReporterPlugin):
 			Glyphs.showMacroWindow()
 			print "Show Black Fill error (foreground): %s" % e
 		try: # components
-			NSColor.colorWithCalibratedRed_green_blue_alpha_( 0.0, 0.0, 0.0, 0.7 ).set()	
+			NSColor.colorWithCalibratedRed_green_blue_alpha_( 0.0, 0.0, 0.0, 0.7 ).set()
 			if layer.components:
 				for c in layer.components:
 					c.bezierPath.fill()
