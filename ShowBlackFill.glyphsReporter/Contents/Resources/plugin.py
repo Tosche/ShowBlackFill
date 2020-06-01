@@ -123,11 +123,7 @@ class ShowBlackFill(ReporterPlugin):
 			print("Show Black Fill error (foreground): %s" % e)
 			
 		try: # components
-<<<<<<< HEAD
 			NSColor.colorWithCalibratedRed_green_blue_alpha_( 0.0, 0.0, 0.0, 0.7 ).set()
-=======
-			NSColor.greyColor().colorWithAlphaComponent_(0.7).set()	
->>>>>>> 891778976a97280c1f28603ea06520d4667e1db7
 			if layer.components:
 				for c in layer.components:
 					c.bezierPath.fill()
