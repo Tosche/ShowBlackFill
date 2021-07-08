@@ -15,6 +15,7 @@ from __future__ import division, print_function, unicode_literals
 import objc
 from GlyphsApp import *
 from GlyphsApp.plugins import *
+from GlyphsApp import *
 
 class ShowBlackFill(ReporterPlugin):
 
